@@ -167,6 +167,24 @@ client.on('messageCreate', message => {
                 });
             }
 
+            // グローバルipの表示
+            else if(cmd === "ip"){
+                const { exec } = require('child_process');
+
+                // shellスクリプトの実行
+                exec('bash ../shell/show_ip.sh', (err, stdout, stderr) => {
+        
+                    // shell実行時エラーが発生した場合
+                    if (err) {
+                        console.log(`${stderr}`);
+                        return;
+                    }
+                    else{
+                        message.channel.send("IP: "+`${stdout}`);
+                    }
+                })
+            }
+
             // 不正なコマンドが入力された場合
             else{
                 message.channel.send("無効なコマンド : " + cmd);
